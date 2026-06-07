@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบหลังบ้านแอดมินย่อย - ตั้งค่าเต็มระบบ</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Chakra Petch', sans-serif; background-color: #0f172a; }
+    </style>
+</head>
+<body class="text-slate-200 p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-6">
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-white"><i class="fa-solid fa-gears text-cyan-400 mr-2"></i>ระบบแอดมินย่อย (เวอร์ชันจัดการร้านสมบูรณ์แบบ)</h1>
+                <p class="text-xs text-slate-400 mt-1">จัดการข้อมูลร้านค้า ธีมสีพื้นหลังนีออน และสินค้าในคลังได้ในที่เดียว</p>
+            </div>
+            <div class="bg-slate-950 p-2.5 rounded border border-slate-850 text-xs">
+                <span class="text-slate-500 block">ชื่อร้านค้าปัจจุบันของคุณ:</span>
+                <span class="text-amber-400 font-bold uppercase id-shop-title" id="display-shop-name">COKE-STORE</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                <h3 class="font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2 text-sm text-cyan-400">
+                    <i class="fa-solid fa-sliders"></i> ตั้งค่ารูปลักษณ์หน้าร้านค้า
+                </h3>
+                
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">1. ชื่อร้านค้าขายของ (ข้อ 1)</label>
+                    <input type="text" id="cfg-shop-name" placeholder="เช่น COKE-STORE" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">2. ลิงก์ URL โลโก้ร้านค้า (ข้อ 2)</label>
+                    <input type="url" id="cfg-shop-logo" placeholder="https://... (หากเว้นว่างไว้จะขึ้นเป็นไอคอนไฟแทน)" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">3. สีพื้นหลังหน้าร้านค้า (ข้อ 3, 5ย่อย)</label>
+                    <select id="cfg-shop-bg" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                        <optgroup label="✨ สีสไตล์นีออนไซเบอร์">
+                            <option value="#05070c">🖤 นีออนมืดมิดคลาสสิก (ดั้งเดิม)</option>
+                            <option value="#0d0414">💜 นีออนม่วงไซเบอร์พังค์ (Cyberpunk)</option>
+                            <option value="#020f12">💙 นีออนฟ้าน้ำทะเลไซไฟ (Sci-Fi)</option>
+                            <option value="#03140a">💚 นีออนเขียวเมทริกซ์ (Matrix)</option>
+                            <option value="#140303">❤️ นีออนแดงปีศาจเรืองแสง (Demon Red)</option>
+                        </optgroup>
+                        <optgroup label="🎨 สีปกติโทนสุภาพ">
+                            <option value="#1e1e1e">Dark Gray (เทาเข้มหรูหรา)</option>
+                            <option value="#0f172a">Slate Blue (น้ำเงินกระดานชนวน)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">4. ข้อความท้ายเว็บ Footer (ข้อ 6, 7) <span class="text-rose-400">*จำกัด 15 คำ/อักษร</span></label>
+                    <input type="text" id="cfg-shop-footer" maxlength="15" placeholder="เช่น COKE-STORE" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                    <p class="text-[10px] text-slate-500 mt-1">ผลลัพธ์: © 2026 [ข้อความของคุณ]. All Rights Reserved.</p>
+                </div>
+
+                <button onclick="saveShopConfig()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white py-2 rounded text-sm font-bold cursor-pointer transition">
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกการตั้งค่าร้านค้าทั้งหมด
+                </button>
+            </div>
+
+            <div class="lg:col-span-2 bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3">
+                <h3 class="font-bold text-white border-b border-slate-800 pb-2 text-sm text-amber-400">สร้างและจัดการหมวดหมู่เกมหลัก</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-950 p-3 rounded-lg border border-slate-850">
+                    <div>
+                        <label class="block text-[11px] text-slate-400 mb-1">ชื่อหมวดหมู่เกม</label>
+                        <input type="text" id="cat-name" placeholder="เช่น Roblox blox Fruits" class="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-xs text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-slate-400 mb-1">ลิงก์รูปภาพแบนเนอร์หมวดหมู่</label>
+                        <input type="url" id="cat-banner" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-xs text-white focus:outline-none">
+                    </div>
+                    <div class="sm:col-span-2 text-right">
+                        <button onclick="createCategory()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 px-4 py-1.5 rounded text-xs font-bold transition cursor-pointer">
+                            + เพิ่มหมวดหมู่
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-800 rounded-lg max-h-[160px]">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-950 text-slate-400 sticky top-0 text-[10px]">
+                            <tr>
+                                <th class="p-2">แบนเนอร์</th>
+                                <th class="p-2">ชื่อหมวดหมู่</th>
+                                <th class="p-2 text-center">ลบ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="category-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white border-b border-slate-800 pb-2 text-sm text-emerald-400">เพิ่มไอดีเกมลงระบบสินค้า</h3>
+            <form onsubmit="addProduct(event)" class="grid grid-cols-1 sm:grid-cols-6 gap-3">
+                <div class="sm:col-span-2">
+                    <label class="block text-xs text-slate-400 mb-1">เลือกหมวดหมู่สินค้า</label>
+                    <select id="p-category-select" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none"></select>
+                </div>
+                <div class="sm:col-span-3">
+                    <label class="block text-xs text-slate-400 mb-1">ชื่อสินค้าไอดีเกม</label>
+                    <input type="text" id="p-name" required placeholder="ไอดีเลเวลตัน 2550" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+                <div class="sm:col-span-1">
+                    <label class="block text-xs text-slate-400 mb-1">ราคา (บาท)</label>
+                    <input type="number" step="0.01" id="p-price" required placeholder="15.00" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+                <div class="sm:col-span-4">
+                    <label class="block text-xs text-slate-400 mb-1">ลิงก์รูปปกรูปภาพสี่เหลี่ยมสินค้า</label>
+                    <input type="url" id="p-image" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs text-slate-400 mb-1">จำนวนสินค้าในสต็อก</label>
+                    <input type="number" id="p-stock" required placeholder="50" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+                <div class="sm:col-span-6">
+                    <label class="block text-xs text-slate-400 mb-1">ข้อมูลรหัสผ่านเกมสำหรับส่งให้หลังจ่ายเงินสำเร็จ</label>
+                    <input type="text" id="p-acc" required placeholder="ID:xxx / PASS:xxx" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                </div>
+                <div class="sm:col-span-6 text-right">
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded text-sm font-bold cursor-pointer transition">💾 บันทึกเพิ่มสินค้าเข้าสต็อก</button>
+                </div>
+            </form>
+
+            <div class="overflow-x-auto border border-slate-800 rounded-lg">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-950 text-slate-400 text-[10px]">
+                        <tr>
+                            <th class="p-3">รูปปก</th>
+                            <th class="p-3">หมวดหมู่</th>
+                            <th class="p-3">ชื่อสินค้าไอดี</th>
+                            <th class="p-3">ราคา</th>
+                            <th class="p-3">คงเหลือ</th>
+                            <th class="p-3 text-center">ลบ</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="overflow-y-auto max-h-[300px]">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <tbody id="all-product-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let categories = JSON.parse(localStorage.getItem('db_categories')) || [];
+        let products = JSON.parse(localStorage.getItem('db_all_products')) || [];
+
+        window.onload = function() {
+            document.getElementById('cfg-shop-name').value = localStorage.getItem('db_name') || "COKE-STORE";
+            document.getElementById('cfg-shop-logo').value = localStorage.getItem('db_logo') || "";
+            document.getElementById('cfg-shop-bg').value = localStorage.getItem('db_bg_color') || "#05070c";
+            document.getElementById('cfg-shop-footer').value = localStorage.getItem('db_footer_text') || "COKE-STORE";
+            
+            document.getElementById('display-shop-name').innerText = localStorage.getItem('db_name') || "COKE-STORE";
+            refreshAllData();
+        };
+
+        function refreshAllData() {
+            renderCategoryTable();
+            renderCategorySelectOptions();
+            renderAllProductsTable();
+        }
+
+        function saveShopConfig() {
+            const name = document.getElementById('cfg-shop-name').value.trim() || "COKE-STORE";
+            const logo = document.getElementById('cfg-shop-logo').value.trim();
+            const bg = document.getElementById('cfg-shop-bg').value;
+            const footer = document.getElementById('cfg-shop-footer').value.trim() || "COKE-STORE";
+
+            localStorage.setItem('db_name', name);
+            localStorage.setItem('db_logo', logo);
+            localStorage.setItem('db_bg_color', bg);
+            localStorage.setItem('db_footer_text', footer);
+
+            document.getElementById('display-shop-name').innerText = name;
+            alert('บันทึกดีไซน์ข้อมูลร้านและสีพื้นหลังเรียบร้อย!');
+        }
+
+        function createCategory() {
+            const name = document.getElementById('cat-name').value.trim();
+            const banner = document.getElementById('cat-banner').value.trim() || "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600";
+            if(!name) return alert('กรุณาระบุชื่อหมวดหมู่');
+
+            categories.push({ id: "cat-" + Date.now(), name: name, banner: banner });
+            localStorage.setItem('db_categories', JSON.stringify(categories));
+            document.getElementById('cat-name').value = '';
+            document.getElementById('cat-banner').value = '';
+            refreshAllData();
+        }
+
+        function deleteCategory(id) {
+            if(confirm('ยืนยันที่จะลบหมวดหมู่นี้?')) {
+                categories = categories.filter(c => c.id !== id);
+                products = products.filter(p => p.catId !== id);
+                localStorage.setItem('db_categories', JSON.stringify(categories));
+                localStorage.setItem('db_all_products', JSON.stringify(products));
+                refreshAllData();
+            }
+        }
+
+        function addProduct(e) {
+            e.preventDefault();
+            products.push({
+                id: Date.now(),
+                catId: document.getElementById('p-category-select').value,
+                name: document.getElementById('p-name').value,
+                price: parseFloat(document.getElementById('p-price').value),
+                stock: parseInt(document.getElementById('p-stock').value) || 0,
+                image: document.getElementById('p-image').value.trim() || "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300",
+                acc: document.getElementById('p-acc').value
+            });
+            localStorage.setItem('db_all_products', JSON.stringify(products));
+            document.getElementById('p-name').value = '';
+            document.getElementById('p-price').value = '';
+            document.getElementById('p-image').value = '';
+            document.getElementById('p-stock').value = '';
+            document.getElementById('p-acc').value = '';
+            refreshAllData();
+        }
+
+        function deleteProduct(id) {
+            if(confirm('ต้องการลบไอเทมนี้?')) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('db_all_products', JSON.stringify(products));
+                refreshAllData();
+            }
+        }
+
+        function renderCategoryTable() {
+            const tbody = document.getElementById('category-table-body');
+            tbody.innerHTML = '';
+            categories.forEach(c => {
+                tbody.innerHTML += `<tr class="border-b border-slate-850">
+                    <td class="p-2"><img src="${c.banner}" class="w-16 h-7 object-cover rounded"></td>
+                    <td class="p-2 text-white font-bold">${c.name}</td>
+                    <td class="p-2 text-center"><button onclick="deleteCategory('${c.id}')" class="text-rose-400 cursor-pointer"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+            });
+        }
+
+        function renderCategorySelectOptions() {
+            const select = document.getElementById('p-category-select');
+            select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+
+        function renderAllProductsTable() {
+            const tbody = document.getElementById('all-product-table-body');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                const cat = categories.find(c => c.id === p.catId);
+                tbody.innerHTML += `<tr class="border-b border-slate-850 w-full flex text-left items-center">
+                    <td class="p-3 w-1/6"><img src="${p.image}" class="w-8 h-8 object-cover rounded"></td>
+                    <td class="p-3 w-1/6 text-slate-400 truncate">${cat ? cat.name : 'ทั่วไป'}</td>
+                    <td class="p-3 w-2/6 text-white truncate">${p.name}</td>
+                    <td class="p-3 w-1/6 text-amber-400 font-bold">฿${p.price.toFixed(2)}</td>
+                    <td class="p-3 w-1/6 text-slate-300">${p.stock} ชิ้น</td>
+                    <td class="p-3 w-1/6 text-center"><button onclick="deleteProduct(${p.id})" class="text-rose-400 cursor-pointer"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+            });
+        }
+    </script>
+</body>
+</html>

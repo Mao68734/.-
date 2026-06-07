@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>COKE-STORE - ระบบเข้าสู่ระบบ</title>
+    <style>
+      body{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: 'Chakra Petch', sans-serif;
+        background: linear-gradient(to bottom, #05070c, #0f172a, #1e1b4b);
+      }
+      .main{
+        width: 350px;
+        height: 500px;
+        background: #0f172a;
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      #chk{
+        display: none;
+      }
+      .signup{
+        position: relative;
+        width:100%;
+        height: 100%;
+      }
+      label{
+        color: #fff;
+        font-size: 2.1em;
+        justify-content: center;
+        display: flex;
+        margin: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .5s ease-in-out;
+        letter-spacing: 1px;
+      }
+      input{
+        width: 65%;
+        height: 16px;
+        background: #1e293b;
+        justify-content: center;
+        display: flex;
+        margin: 18px auto;
+        padding: 12px;
+        border: 1px solid #334155;
+        outline: none;
+        border-radius: 8px;
+        color: #fff;
+        font-family: 'Chakra Petch', sans-serif;
+        transition: 0.2s;
+      }
+      input:focus {
+        border-color: #38bdf8;
+        background: #0f172a;
+      }
+      input::placeholder {
+        color: #64748b;
+      }
+      button{
+        width: 72%;
+        height: 42px;
+        margin: 10px auto;
+        justify-content: center;
+        display: block;
+        color: #0f172a;
+        background: #fff;
+        font-size: 1em;
+        font-weight: bold;
+        margin-top: 25px;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        transition: .2s ease-in;
+        cursor: pointer;
+        font-family: 'Chakra Petch', sans-serif;
+      }
+      button:hover{
+        background: #e2e8f0;
+        transform: scale(1.02);
+      }
+      .login{
+        height: 460px;
+        background: #f8fafc;
+        border-radius: 60% / 10%;
+        transform: translateY(-190px);
+        transition: .8s ease-in-out;
+      }
+      .login label{
+        color: #0f172a;
+        transform: scale(.6);
+      }
+      .login input {
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        color: #0f172a;
+      }
+      .login input:focus {
+        background: #fff;
+        border-color: #0f172a;
+      }
+      .login button {
+        background: #0f172a;
+        color: #fff;
+      }
+      .login button:hover {
+        background: #1e293b;
+      }
+
+      #chk:checked ~ .login{
+        transform: translateY(-500px);
+      }
+      #chk:checked ~ .login label{
+        transform: scale(1);	
+      }
+      #chk:checked ~ .signup label{
+        transform: scale(.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">  	
+      <input type="checkbox" id="chk" aria-hidden="true">
+        
+        <div class="signup">
+          <form onsubmit="handleAdminLogin(event)">
+            <label for="chk" aria-hidden="true">Admin Zone</label>
+            <input type="text" id="ad-user" placeholder="รหัสบน (gu84)" required autocomplete="off">
+            <input type="password" id="ad-pass" placeholder="รหัสล่าง (1234)" required autocomplete="off">
+            <button type="submit">ล็อกอินเข้าแอดมิน</button>
+          </form>
+        </div>
+
+        <div class="login">
+          <form onsubmit="handleUserLogin(event)">
+            <label for="chk" aria-hidden="true">Customer</label>
+            <input type="text" id="lg-user" placeholder="ชื่อผู้ใช้อะไรก็ได้" required>
+            <input type="password" id="lg-pass" placeholder="รหัสผ่านอะไรก็ได้" required>
+            <button type="submit">เข้าสู่หน้าร้านค้า</button>
+          </form>
+        </div>
+    </div> 
+
+    <script>
+      // 1. ฟังก์ชันล็อกอินของแอดมินย่อย (หน้าแรกสุดสีเข้ม)
+      function handleAdminLogin(e) {
+        e.preventDefault();
+        const adminUser = document.getElementById('ad-user').value.trim();
+        const adminPass = document.getElementById('ad-pass').value;
+
+        // เช็ครหัสผ่านตามสั่ง: บน gu84 / ล่าง 1234
+        if (adminUser === 'gu84' && adminPass === '1234') {
+          alert('ยินดีต้อนรับท่านแอดมินย่อย! กำลังพาวาร์ปไปหน้าจัดการระบบหลังบ้าน...');
+          
+          // ส่งตัวแอดมินข้ามไปที่ไฟล์จัดการระบบหลังบ้านทันที
+          window.location.href = 'mao84.html'; 
+        } else {
+          alert('❌ รหัสแอดมินไม่ถูกต้อง! ไม่สามารถเข้าสู่ระบบหลังบ้านได้');
+          document.getElementById('ad-pass').value = '';
+        }
+      }
+
+      // 2. ฟังก์ชันล็อกอินของฝั่งลูกค้า (เมื่อกดสลับหน้าลงมา)
+      function handleUserLogin(e) {
+        e.preventDefault();
+        const username = document.getElementById('lg-user').value.trim();
+
+        // จำลองโปรไฟล์ลูกค้าไปแสดงผลบนแถบเว็บหน้าร้านค้า
+        const clientProfile = {
+          name: username.substring(0, 20),
+          avatar: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150",
+          money: 0.00
+        };
+        localStorage.setItem('user_profile', JSON.stringify(clientProfile));
+
+        alert('เข้าสู่หน้าร้านค้าสำเร็จ!');
+        // พาลูกค้าวิ่งไปหน้าร้านค้าปกติ (ไฟล์ index.html)
+        window.location.href = 'index.html';
+      }
+    </script>
+  </body>
+</html>
